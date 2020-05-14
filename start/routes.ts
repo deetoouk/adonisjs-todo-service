@@ -19,6 +19,7 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 
 Route.get('/', async () => {
   return { hello: 'world' }
@@ -27,3 +28,17 @@ Route.get('/', async () => {
 Route.resource('/tasks', 'TasksController').apiOnly()
 Route.post('/tasks/:id/complete', 'TasksController.complete')
 Route.post('/tasks/:id/incomplete', 'TasksController.incomplete')
+
+// Health checks
+Route.get('health', async ({ response }) => {
+  const report = await HealthCheck.getReport()
+  return report.healthy ? response.ok(report) : response.badRequest(report)
+})
+
+Route.get('/healthz', async ({ response }) => { // Used by K8s
+  const isLive = await HealthCheck.isLive()
+
+  return isLive
+    ? response.status(200).send({})
+    : response.status(400).send({})
+})

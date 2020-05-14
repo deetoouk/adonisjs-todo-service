@@ -64,7 +64,7 @@ const databaseConfig: DatabaseConfig & { orm: Partial<OrmConfig> } = {
         password: Env.get('DB_PASSWORD', 'adonis') as string,
         database: Env.get('DB_NAME', 'adonis-todo-service') as string,
       },
-      healthCheck: false,
+      healthCheck: true,
     },
 
     /*

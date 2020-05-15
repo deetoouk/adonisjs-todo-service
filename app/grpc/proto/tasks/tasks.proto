@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package tasks;
+
+import "google/protobuf/empty.proto";
+
+message Task {
+  string id = 1;
+  string name = 2;
+  bool completed = 3;
+  string updated_at = 4;
+  string created_at = 5;
+}
+
+message TaskCreateRequest {
+  string name = 1;
+}
+
+message TaskUpdateRequest {
+  string id = 1;
+  string name = 2;
+}
+
+message TaskFetchRequest {
+  string id = 1;
+}
+
+service TaskService {
+  rpc Create(TaskCreateRequest) returns(Task) {}
+  rpc Update(TaskUpdateRequest) returns(Task) {}
+  rpc Complete(TaskFetchRequest) returns(Task) {}
+  rpc Incomplete(TaskFetchRequest) returns(Task) {}
+  rpc Delete(TaskFetchRequest) returns(google.protobuf.Empty) {}
+  rpc Get(TaskFetchRequest) returns(Task) {}
+}

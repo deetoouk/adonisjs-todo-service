@@ -18,5 +18,8 @@ export default class AppProvider {
 
   public ready () {
     // App is ready
+    const GRPCServer = require('App/grpc/Server').default
+
+    GRPCServer.start()
   }
 }
